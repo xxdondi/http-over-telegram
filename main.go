@@ -92,6 +92,9 @@ func main() {
 	if arg.Mode == "none" {
 		panic("Cannot run without --mode")
 	}
+	if arg.Mode != "enter" && arg.Mode != "exit" {
+		panic(fmt.Sprintf("Invalid --mode value provided '%s', use 'enter' or 'exit'", arg.Mode))
+	}
 
 	// Parse env variables
 	godotenv.Load()
@@ -131,7 +134,7 @@ func main() {
 		// Run proxy server
 		go func() {
 			defer mainWg.Done()
-			proxyServer.OnRequest(goproxy.ReqHostMatches(regexp.MustCompile(`^.*neverssl.*$`))).DoFunc(
+			proxyServer.OnRequest(goproxy.ReqHostMatches(regexp.MustCompile(`^.*ycombinator.com.*$`))).DoFunc(
 				func(req *http.Request, ctx *goproxy.ProxyCtx) (*http.Request, *http.Response) {
 					reqId, err := shortid.Generate()
 					if err != nil {
