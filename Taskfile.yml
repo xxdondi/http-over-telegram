@@ -10,13 +10,3 @@ tasks:
   build:
     cmds:
       - go build -o bin -v ./...
-  test:
-    cmds:
-      - go test -v ./...
-  clean:
-    cmds:
-      - rm -rf bin/*
-      - rm -rf data/*
-  decode-data:
-    cmds:
-      - ~/go/bin/protoscope data $1 > $1.txt
